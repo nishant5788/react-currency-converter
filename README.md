@@ -1,2 +1,32 @@
-# react-currency-converter
-Useful Currency Converter made using React
+# React Currency Converter
+
+
+
+
+
+A simple currency converter built with React.
+
+
+
+Features
+
+\- Convert between currencies
+
+\- Live exchange rates from API
+
+\- Swap currencies
+
+\- Responsive UI
+
+
+
+Tech Stack
+
+React
+
+JavaScript
+
+CSS
+
+Frankfurter API
+
