@@ -1,44 +1,20 @@
 import { useEffect, useState } from "react";
+import useCurrency from './hooks/useCurrency';
+import Header from './components/Header';
+import CurrencySelect from './components/CurrencySelect';
+import AmountInput from './components/AmountInput';
+import Result from './components/Result';
+import Loader from './components/Loader';
 
 export default function App() {
     
     const [amount, setAmount] = useState(1);
     const [fromCur, setFromCur] = useState("USD");
     const [toCur, setToCur] = useState("INR");
-    const [converted, setConverted] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     
-    useEffect(function() {
-        
-        const controller = new AbortController();
-        
-        async function fetchCurrentRate() {
-            
-            setIsLoading(true);
-            
-            const res = await fetch(
-          `https://api.frankfurter.app/latest?amount=${amount}&from=${fromCur}&to=${toCur}`
-        );
-            
-            const data = await res.json();
-            
-            setConverted(data.rates[toCur]);
-            
-            setIsLoading(false);
-            
-        }
-        
-        fetchCurrentRate();
-        
-        return function() {
-      controller.abort();
-    }
-        
-    }, [amount,fromCur,toCur]);
+   const { converted, isLoading } = useCurrency(amount, fromCur, toCur);
     
-    
-    console.log("fromCur is " + fromCur)
-    
+        
   return (
       <>
     <main className="app">
@@ -69,57 +45,8 @@ export default function App() {
   );
 }
 
-function Header() {
-    return(
-    <header className="header">
-          <h1>Currency Converter</h1>
-          <p className="description">
-            Convert currencies instantly using real-time exchange rates.
-          </p>
-        </header>
-    );
-}
-
-function AmountInput({amount, setAmount}) {
-    return(
-        <input
-            type="number"
-            placeholder="Enter amount"
-            className="amount-input"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value) }
-          />
-          
-    );
-}
 
 
-function CurrencySelect({currency, setCurrency}) {
-    return (
-    <select className="currency-select" value={currency} onChange={(e) => setCurrency(e.target.value)}>
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="CAD">CAD</option>
-              <option value="INR">INR</option>
-              <option value="PHP">PHP</option>
-            </select>
-    );
-}
 
-function Result({amount}) {
-    return(
-    <div className="result">
-            <p>{amount}</p>
-          </div>
-    );
-}
-
-function Loader() {
-    return(
-    <div className="loader">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" width="70" height="70" style={{ shapeRendering: "auto", display: "block", background: "transparent" }}><g><circle fill="#e15b64" r="10" cy="50" cx="84"> <animate begin="0s" keySplines="0 0.5 0.5 1" values="10;0" keyTimes="0;1" calcMode="spline" dur="0.25s" repeatCount="indefinite" attributeName="r"></animate> <animate begin="0s" values="#e15b64;#abbd81;#f8b26a;#f47e60;#e15b64" keyTimes="0;0.25;0.5;0.75;1" calcMode="discrete" dur="1s" repeatCount="indefinite" attributeName="fill"></animate> </circle><circle fill="#e15b64" r="10" cy="50" cx="16"> <animate begin="0s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="r"></animate> <animate begin="0s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="cx"></animate> </circle><circle fill="#f47e60" r="10" cy="50" cx="50"> <animate begin="-0.25s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="r"></animate> <animate begin="-0.25s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="cx"></animate> </circle><circle fill="#f8b26a" r="10" cy="50" cx="84"> <animate begin="-0.5s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="r"></animate> <animate begin="-0.5s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="cx"></animate> </circle><circle fill="#abbd81" r="10" cy="50" cx="16"> <animate begin="-0.75s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="r"></animate> <animate begin="-0.75s" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" calcMode="spline" dur="1s" repeatCount="indefinite" attributeName="cx"></animate> </circle><g></g></g></svg>
-    </div>
-    );
-}
 
 
