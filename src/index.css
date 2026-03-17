@@ -24,7 +24,7 @@ body {
 /* Card */
 
 .converter-card {
-  max-width: 420px;
+  max-width: 30rem;
   margin: auto;
   background: white;
   border-radius: 12px;
@@ -130,3 +130,16 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+/* Footer */
+
+.footer {
+    text-align: center;
+    opacity: 0.4;
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    transform: translate(-50%,0)
+}
+
+
