@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useCurrency from './hooks/useCurrency';
 import Header from './components/Header';
 import CurrencySelect from './components/CurrencySelect';
