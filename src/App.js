@@ -10,7 +10,7 @@ import Loader from './components/Loader';
 export default function App() {
     
     const [amount, setAmount] = useState(1);
-    const [fromCur, setFromCur] = useState("USD");
+    const [fromCur, setFromCur] = useState("PHP");
     const [toCur, setToCur] = useState("INR");
     
    const { converted, isLoading } = useCurrency(amount, fromCur, toCur);
