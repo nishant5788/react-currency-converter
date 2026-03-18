@@ -4,6 +4,7 @@ import Header from './components/Header';
 import CurrencySelect from './components/CurrencySelect';
 import AmountInput from './components/AmountInput';
 import Result from './components/Result';
+import SwapCurrencies from './components/SwapCurrencies';
 import Loader from './components/Loader';
 
 export default function App() {
@@ -13,8 +14,12 @@ export default function App() {
     const [toCur, setToCur] = useState("INR");
     
    const { converted, isLoading } = useCurrency(amount, fromCur, toCur);
+
+   function handleSwap() {
+  setFromCur(toCur);
+  setToCur(fromCur);
+}
     
-        
   return (
       <>
     <main className="app">
@@ -30,7 +35,7 @@ export default function App() {
           <div className="currency-row">
             <CurrencySelect currency={fromCur} setCurrency={setFromCur} />
 
-            <span className="arrow">→</span>
+            <SwapCurrencies onSwapCurrency = {handleSwap} />
 
             <CurrencySelect currency={toCur} setCurrency={setToCur} />
           </div>
